@@ -261,8 +261,10 @@ class ResourceCloudStorage(CloudStorage):
                 self.driver_options['key'],
                 self.driver_options['secret']
             )
+            expires = int(config.get('ckanext.cloudstorage.secure_url_expiry', 60 * 60))
+
             return s3_connection.generate_url(
-                expires_in=60 * 60,
+                expires_in=expires,
                 method='GET',
                 bucket=self.container_name,
                 query_auth=True,
